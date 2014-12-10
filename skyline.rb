@@ -23,7 +23,7 @@ class Skyline
     end
   end
 
-  def populate_critical_points_and_buildings(input)
+  def scan_critical_points(input)
     buildings = []
     critical_points = {}
     
@@ -42,9 +42,7 @@ class Skyline
     critical_points
   end
 
-  def calculate
-    critical_points = populate_critical_points_and_buildings @input
-
+  def generate_output(critical_points)
     last_height = 0
     critical_points.sort.each do |point, building_array|
       max_height_building = building_array.max_by(&:height)
@@ -61,6 +59,8 @@ class Skyline
   def initialize(input)
     @input = input
     @output = []
+    critical_points = scan_critical_points @input
+    generate_output critical_points
   end
 
   def input
@@ -74,6 +74,5 @@ class Skyline
 end
 
 skyline = Skyline.new [1, 11, 5, 1, 20, 6, 2, 6, 7, 3, 13, 9, 12, 7, 16, 14, 3, 25, 15, 8, 16, 19, 18, 22, 23, 13, 29, 24, 4, 28]
-skyline.calculate
 puts "input: #{skyline.input}"
 puts "output: #{skyline.output}"
